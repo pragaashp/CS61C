@@ -1,0 +1,19 @@
+and $t0 $t0 $zero
+add $t1 $t0 17
+xor $t2 $t1 3
+sub $jc $t1 17
+jge @J1
+jle @J2
+
+
+FINAL: j @END
+
+J1:	and $t3 $t3 $zero
+	add $t3 $t3 6688
+	j @END
+
+J2:	and $t4 $t4 $zero
+	add $t4 $t4 9799
+	jge @J1
+
+END: j $ra

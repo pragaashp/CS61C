@@ -1,0 +1,41 @@
+#
+# TEST CASE 5
+# YOUR TEST CASE GOES HERE
+#
+and $t0 $t0 $zero
+stu $t1 $t0 $t0
+stu $t2 $t0 $t0
+stu $t3 $t0 $t0
+stu $t4 $t0 $t0
+stu $t5 $t0 $t0
+
+add $t0 $t0 3698
+jal @J0
+
+add $t5 $t5 3980
+
+END: j @FINAL
+
+J0:	sub $jc $t0 3600
+	jgt @J1
+	j $ra
+
+J1:	add $t1 $t1 8902
+	jlt @J2
+	j @J3
+
+J2:	mul $t2 $t1 789
+	jle @J3
+	j @J4
+
+J3:	sub $t2 $t2 687
+	jne @J2
+
+J4:	add $t3 $t2 7900
+	jge $ra
+
+J5:	div $t4 $t3 -7829
+	jeq @J3
+
+FINAL: and $t6 $t6 $zero
+	   add $t6 $t6 -7128

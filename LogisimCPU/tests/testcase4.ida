@@ -1,0 +1,64 @@
+#
+# TEST CASE 4
+# YOUR TEST CASE GOES HERE
+#
+# MANIPULATION OF FRAME POINTERS WITH DYNAMIC INPUT ARGUMENTS
+
+and $a0 $a0 $zero		# x = 0
+and $a1 $a1 $zero		# y = 0
+or $a1 $a1 1			# y = 1
+xor $a3 $a0 15			# N = 15
+sub $sp $sp -2
+sub $fp $fp -6
+sw $ra 0($sp)
+sw $a0 0($fp)
+sw $a1 1($fp)
+sw $a3 2($fp)
+
+jal @INIT
+
+lw $ra 0($sp)
+lw $a0 0($fp)
+lw $a1 1($fp)
+lw $a3 2($fp)
+add $sp $sp 2
+add $fp $fp 6
+
+j $ra
+
+# # #
+# SIMPLE FIBONACCI CALCULATOR
+# # #
+
+INIT:	lw $t2 0($fp)			# $t2 = x
+		lw $t3 1($fp)			# $t3 = y
+		lw $t4 2($fp)			# $t4 = N
+		stu $t0 $t2 $t2			# i = 0
+
+LOOP:	and $t1 $t1 $zero		# tmp = 0
+		or $t1 $t1 $t2			# tmp = x
+		and $t2 $t2 $zero		# x = 0
+		or $t2 $t2 $t3			# x = y
+		add $t2 $t3 $t1			# y = tmp + y = x + y
+		add $t0 $t0 1 			# i++
+		sub $jc $t0 $t4			# $jc = i - 15
+		jlt @LOOP
+
+STEP:	stu $v0 $zero $zero		# $v0 = 0
+		or $v0 $v0 $t3
+		sub $t5 $t4 20
+		and $jc $jc $zero
+		or $jc $jc $t5
+		jne @MID
+		jeq @FINAL
+
+MID:	sub $sp $sp -2
+		sw $ra 0($sp)
+		jal @NEXT
+		lw $ra 0($sp)
+		add $sp $sp 2
+		j @LOOP
+
+NEXT:	add $t4 $t4 1
+
+FINAL:	j $ra

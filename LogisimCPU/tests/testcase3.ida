@@ -1,0 +1,42 @@
+#
+# TEST CASE 3
+# YOUR TEST CASE GOES HERE
+#
+# CALLING TESTCASE 2
+
+sub $sp $sp -6
+sw $ra 0($sp)
+sw $a0 1($sp)
+sw $a1 2($sp)
+
+jal @INIT
+
+lw $ra 0($sp)
+lw $a0 1($sp)
+lw $a1 2($sp)
+add $sp $sp 6
+
+j $ra
+
+# # #
+# SIMPLE FIBONACCI CALCULATOR
+# # #
+
+INIT:	and $a0 $a0 $zero		# x = 0
+		and $a1 $a1 $zero		# y = 0
+		or $a1 $a1 1			# y = 1
+		stu $t0 $a0 $a0			# i = 0
+		xor $a3 $a0 15			# N = 15
+
+LOOP:	and $t1 $t1 $zero		# tmp = 0
+		or $t1 $t1 $a0			# tmp = x
+		and $a0 $a0 $zero		# x = 0
+		or $a0 $a0 $a1			# x = y
+		add $a1 $a1 $t1			# y = tmp + y = x + y
+		add $t0 $t0 1 			# i++
+		sub $jc $t0 $a3			# $jc = i - 15
+		jlt @LOOP
+
+FINAL:	stu $v0 $zero $zero		# $v0 = 0
+		or $v0 $v0 $a1
+		j $ra

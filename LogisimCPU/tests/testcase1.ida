@@ -1,0 +1,62 @@
+#
+# TEST CASE 1
+# YOUR TEST CASE GOES HERE
+#
+add $0 $0 32		# $0 should still be zero
+and $t0 $t0 $zero
+add $t0 $t0 29		# i = 29
+
+sub $t1 $t0 61		# j = -3
+sub $t2 $t0 26		# k = 3
+
+sl $t2 $t0 $t2		# k = 31 = 0x1f
+
+sr $t1 $t1 4		# j = -2 = 0xfffffff2
+
+and $t3 $t2 $t0		# a = 29 = i
+
+or $t4 $t0 16		# b = 45 = 0x2b
+
+add $t2 $t2 663		# k = 693
+
+rev $t5 $t2 0
+rev $t6 $t2 1
+rev $t7 $t2 2
+rev $t8 $t2 3
+rev $t9 $t2 4
+rev $t10 $t2 5
+rev $t11 $t2 6
+rev $t12 $t2 7
+rev $t13 $t2 8
+rev $t14 $t2 9
+
+xor $t5 $t5 6 		# $t5 = 697
+
+sub $0 $t5 33
+
+mul $t6 $t3 $t1
+mul $t7 $t3 3
+mul $t8 $t3 $0
+
+div $t9 $t3 $t3
+div $t10 $t3 $t1
+sub $t11 $t3 70
+div $t12 $t11 5
+div $t13 $t11 $t1
+div $t14 $t3 $0
+div $t15 $t11 $0
+
+lh $t16 4($t16)
+lh $t17 $t1($t17)
+sh $t0 0($t18)
+sh $t2 $t1($t19)
+
+add $t1 $t1 6
+lw $t16 0($t16)
+lw $t17 $t1($t17)
+sw $t18 0($t18)
+sw $t19 $t1($t19)
+
+stu $t3 $t3 $t4
+stu $t4 $t4 39
+stu $t5 $t3 -39
